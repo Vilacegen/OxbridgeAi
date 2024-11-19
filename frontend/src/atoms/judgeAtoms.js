@@ -6,3 +6,9 @@ const createAtom = (key, defaultValue) => atom({
 key: key,
 default: defaultValue,
 });
+
+/*EXAMPLE USE
+
+export const SearchQuery = createAtom('SearchQuery', '');
+
+*/
