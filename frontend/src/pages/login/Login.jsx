@@ -4,8 +4,10 @@ import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+  const navigate = useNavigate()
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -13,6 +15,7 @@ const LoginPage = () => {
   const login = () => {
     // login logic here
     localStorage.setItem("isAuthenticated", "true")
+    navigate("/dashboard")
   }
 
   return (
