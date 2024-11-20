@@ -1,21 +1,23 @@
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const LoginPage = () => {
-  const navigate = useNavigate()
-
+const LoginPage = ({ setIsAuthenticated }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   const login = () => {
-    // login logic here
-    localStorage.setItem("isAuthenticated", "true")
-    navigate("/dashboard")
+    // Add validation if needed
+    if (email && password) {
+      localStorage.setItem("isAuthenticated", "true");
+      setIsAuthenticated(true); // Update the auth state
+      navigate("/dashboard");
+    }
   }
 
   return (
@@ -33,6 +35,7 @@ const LoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="bg-[#CCCCCC]"
+                required
               />
             </div>
             <div className="space-y-2">
@@ -45,22 +48,26 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="bg-[#CCCCCC]"
+                required
               />
             </div>
             <div className='w-full flex justify-center items-center'>
-              <Button className="w-9/12 bg-[#676767] hover:bg-[#676767] hover:bg-opacity-85" onClick={(e)=> {
-                e.preventDefault();
-                login()
-                }}>
+              <Button 
+                className="w-9/12 bg-[#676767] hover:bg-[#676767] hover:bg-opacity-85" 
+                onClick={login}
+              >
                 Log in
               </Button>
             </div>
-            
           </div>
         </CardContent>
       </Card>
     </div>
   );
+};
+
+LoginPage.propTypes = {
+  setIsAuthenticated: PropTypes.func.isRequired
 };
 
 export default LoginPage;

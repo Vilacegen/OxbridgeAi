@@ -6,17 +6,21 @@ import Dashboard from "./pages/judges/Dashboard";
 import "./App.css"
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  
-  useEffect(()=>{
-    const seeAuthentication = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = () => {
       const token = localStorage.getItem("isAuthenticated") === "true";
-      if (token) {
-        setIsAuthenticated(true)
-      }
-    }
-    seeAuthentication()
-  }, [])
+      setIsAuthenticated(token);
+      setIsLoading(false);
+    };
+    checkAuth();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Or your loading component
+  }
 
   return (
     <BrowserRouter>
@@ -25,9 +29,9 @@ function App() {
           path="/"
           element={
             isAuthenticated ? (
-              <Navigate to="/dashboard" />
+              <Navigate to="/dashboard" replace />
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/login" replace />
             )
           }
         />
@@ -35,7 +39,7 @@ function App() {
           path="/login"
           element={
             isAuthenticated ? (
-              <Navigate to="/dashboard" />
+              <Navigate to="/dashboard" replace />
             ) : (
               <Login setIsAuthenticated={setIsAuthenticated} />
             )
@@ -43,21 +47,28 @@ function App() {
         />
         <Route
           path="/signup"
-          element={isAuthenticated ? <Navigate to="/dashboard" /> : <Signup />}
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <Signup />
+            )
+          }
         />
         <Route
           path="/dashboard/*"
-          element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
+          element={
+            isAuthenticated ? (
+              <Dashboard />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         />
-        {/* Add a catch-all route for 404s */}
         <Route
           path="*"
           element={
-            isAuthenticated ? (
-              <Navigate to="/dashboard" />
-            ) : (
-              <Navigate to="/login" />
-            )
+            <Navigate to="/" replace />
           }
         />
       </Routes>
