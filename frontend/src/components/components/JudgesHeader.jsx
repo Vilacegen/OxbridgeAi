@@ -25,7 +25,7 @@ StatCard.propTypes = {
 };
 
 export default function JudgesHeader({ activeTab }) {
-    const tagContent = "Admin";
+    const tagContent = "Judge";
     const menuItems = [
         { label: "Home", to: "/" },
         { label: "Profile", to: "/profile" },
