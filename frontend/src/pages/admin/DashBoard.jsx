@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, HStack, VStack, Spinner, useToast } from "@chakra-ui/react";
 import { FaChartBar, FaUsers, FaCalendarAlt, FaStar } from "react-icons/fa";
 import DynamicStat from "../../components/components/DynamicStat";
+import Header from "../../components/components/Header";
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
@@ -52,6 +53,8 @@ const Dashboard = () => {
   }
 
   return (
+    <>
+    <Header />
     <Box padding={8}>
       {/* Dynamic Stats Section */}
       <HStack spacing={8} mb={8}>
@@ -91,6 +94,7 @@ const Dashboard = () => {
         <p>This is where you can add more sections, tables, or any other content.</p>
       </Box>
     </Box>
+    </>
   );
 };
 
