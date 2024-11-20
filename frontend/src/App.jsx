@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
 import Login from "./pages/login/Login";
 import Signup from "./pages/login/SignUp";
 import Dashboard from "./pages/judges/Dashboard";
@@ -23,7 +23,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route
           path="/"
@@ -65,14 +65,9 @@ function App() {
             )
           }
         />
-        <Route
-          path="*"
-          element={
-            <Navigate to="/" replace />
-          }
-        />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
