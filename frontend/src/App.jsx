@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/login/Login";
 import Signup from "./pages/login/SignUp";
@@ -6,9 +6,17 @@ import Dashboard from "./pages/judges/Dashboard";
 import "./App.css"
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem("isAuthenticated") === "true";
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  useEffect(()=>{
+    const seeAuthentication = () => {
+      const token = localStorage.getItem("isAuthenticated") === "true";
+      if (token) {
+        setIsAuthenticated(true)
+      }
+    }
+    seeAuthentication()
+  }, [])
+
 
   return (
     <BrowserRouter>
