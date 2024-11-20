@@ -13,18 +13,25 @@ import { Card } from "@/components/ui/card"
 import { useState, useEffect } from "react"
 import PropTypes from 'prop-types'
 import { useNavigate } from "react-router-dom"
+import CalendarSchedule from "@/components/components/CalenderSchedule"
 
-// Initial data definitions remain the same...
 const initialScheduleData = [
-  { id: "s1", startup: "DataViz AI", startTime: "09:00", endTime: "09:15", room: "Room A" },
-  { id: "s2", startup: "AI Analytics", startTime: "10:30", endTime: "10:45", room: "Room B" },
-  { id: "s3", startup: "Neural Systems", startTime: "11:15", endTime: "11:30", room: "Room A" },
-  { id: "s4", startup: "ML Solutions", startTime: "13:00", endTime: "13:15", room: "Room C" },
-  { id: "s5", startup: "Deep Learning Co", startTime: "14:20", endTime: "14:35", room: "Room B" },
-  { id: "s6", startup: "AI Vision Corp", startTime: "15:00", endTime: "15:15", room: "Room A" },
-  { id: "s7", startup: "Tech Innovators", startTime: "15:45", endTime: "16:00", room: "Room C" },
-  { id: "s8", startup: "Data Minds", startTime: "16:30", endTime: "16:45", room: "Room B" },
-  { id: "s9", startup: "Smart Systems", startTime: "17:15", endTime: "17:30", room: "Room A" }
+  // Today's schedule (Nov 20, 2024)
+  { id: "s1", startup: "DataViz AI", startTime: "09:00", endTime: "09:15", room: "Room A", date: "2024-11-20" },
+  { id: "s2", startup: "AI Analytics", startTime: "10:30", endTime: "10:45", room: "Room B", date: "2024-11-20" },
+  { id: "s3", startup: "Neural Systems", startTime: "11:15", endTime: "11:30", room: "Room A", date: "2024-11-20" },
+  
+  // Tomorrow's schedule (Nov 21, 2024)
+  { id: "s4", startup: "ML Solutions", startTime: "13:00", endTime: "13:15", room: "Room C", date: "2024-11-21" },
+  { id: "s5", startup: "Deep Learning Co", startTime: "14:20", endTime: "14:35", room: "Room B", date: "2024-11-21" },
+  
+  // Yesterday's schedule (Nov 19, 2024)
+  { id: "s6", startup: "AI Vision Corp", startTime: "15:00", endTime: "15:15", room: "Room A", date: "2024-11-19" },
+  { id: "s7", startup: "Tech Innovators", startTime: "15:45", endTime: "16:00", room: "Room C", date: "2024-11-19" },
+  
+  // Future dates
+  { id: "s8", startup: "Data Minds", startTime: "16:30", endTime: "16:45", room: "Room B", date: "2024-11-25" },
+  { id: "s9", startup: "Smart Systems", startTime: "17:15", endTime: "17:30", room: "Room A", date: "2024-11-25" }
 ].sort((a, b) => {
   const timeA = a.startTime.split(':').map(Number);
   const timeB = b.startTime.split(':').map(Number);
@@ -32,13 +39,14 @@ const initialScheduleData = [
   return timeA[1] - timeB[1];
 });
 
+// Also update evaluation dates
 const initialEvaluationsData = [
-  { id: "e1", company: "AI Vision Corp", date: "2023-05-15", score: 4.5, nominated: true, toBeMentored: false, meetStartup: false },
-  { id: "e2", company: "NLP Innovations", date: "2023-05-15", score: 4.5, nominated: false, toBeMentored: false, meetStartup: true },
-  { id: "e3", company: "AI Vision Corp", date: "2023-05-15", score: 4.5, nominated: true, toBeMentored: false, meetStartup: false },
-  { id: "e4", company: "AI Vision Corp", date: "2023-05-15", score: 4.5, nominated: false, toBeMentored: true, meetStartup: false },
-  { id: "e5", company: "AI Vision Corp", date: "2023-05-15", score: 4.5, nominated: false, toBeMentored: false, meetStartup: true },
-  { id: "e6", company: "AI Vision Corp", date: "2023-05-15", score: 4.5, nominated: true, toBeMentored: false, meetStartup: false }
+  { id: "e1", company: "AI Vision Corp", date: "2024-11-19", score: 4.5, nominated: true, toBeMentored: false, meetStartup: false },
+  { id: "e2", company: "NLP Innovations", date: "2024-11-19", score: 4.5, nominated: false, toBeMentored: false, meetStartup: true },
+  { id: "e3", company: "Tech Innovators", date: "2024-11-19", score: 4.5, nominated: true, toBeMentored: false, meetStartup: false },
+  { id: "e4", company: "DataViz AI", date: "2024-11-20", score: 4.5, nominated: false, toBeMentored: true, meetStartup: false },
+  { id: "e5", company: "AI Analytics", date: "2024-11-20", score: 4.5, nominated: false, toBeMentored: false, meetStartup: true },
+  { id: "e6", company: "Neural Systems", date: "2024-11-20", score: 4.5, nominated: true, toBeMentored: false, meetStartup: false }
 ];
 
 // Define prop types for schedule data
@@ -105,7 +113,7 @@ const ScheduleTable = ({ scheduleData, setActiveTab }) => {
               <TableHead>Action</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody className="font-medium bg-[#404040] text-white">
+          <TableBody className="font-medium bg-[#404040] text-[#F8FAF7]">
             {scheduleData.length > 0 ? (
               scheduleData.map((schedule) => (
                 <TableRow key={schedule.id}>
@@ -261,7 +269,13 @@ export default function Dashboard() {
           </div>
 
           <TabsContent value="dashboard">
-            <ScheduleTable scheduleData={scheduleData} setActiveTab={setActiveTab} />
+          <CalendarSchedule 
+              scheduleData={scheduleData} 
+              onScoreStartup={(id) => {
+              setActiveTab("scoring");
+              navigate(`/dashboard/score/${id}`);
+            }} 
+          />
           </TabsContent>
 
           <TabsContent value="history">

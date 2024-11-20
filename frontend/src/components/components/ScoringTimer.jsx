@@ -26,11 +26,11 @@ const ScoringTimer = ({
   return (
     <div className="flex items-center gap-3">
       {status === 'running' ? (
-        <Pause onClick={onPause} className="h-7 w-7 text-[#0A2540] hover:cursor-pointer" />
+        <Pause onClick={onPause} className="h-7 w-7 text-[#f0eeee] hover:cursor-pointer" />
       ) : (
-        <Play onClick={onResume} className="h-7 w-7 text-[#0A2540] hover:cursor-pointer" />
+        <Play onClick={onResume} className="h-7 w-7 text-[#f0eeee] hover:cursor-pointer" />
       )}
-      <span className="text-4xl text-[#0A2540] font-bold min-w-[90px] m-auto">{formattedTime}</span>
+      <span className="text-4xl text-[#f0eeee] font-bold min-w-[90px] m-auto">{formattedTime}</span>
       <div className="flex gap-2">
         {status !== 'stopped' && (
           <Button 
@@ -41,7 +41,7 @@ const ScoringTimer = ({
           </Button>
         )}
         <div className="w-full flex justify-center items-center ml-2">
-          <RotateCcw onClick={onReset} className="h-7 w-7 text-[#0A2540] hover:cursor-pointer" />
+          <RotateCcw onClick={onReset} className="h-7 w-7 text-[#f0eeee] hover:cursor-pointer" />
         </div>
       </div>
     </div>

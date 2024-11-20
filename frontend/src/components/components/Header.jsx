@@ -14,9 +14,17 @@ import {
 import PropTypes from 'prop-types';
 import { AiOutlineUser } from "react-icons/ai";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom"; // Import Link for routing
+import { Link, useNavigate } from "react-router-dom"; // Import Link for routing
+import { Button } from "../ui/button";
 
 const Navbar = ({tagContent, menuItems }) => {
+
+  const navigate = useNavigate()
+
+  const LogOut = () => {
+    localStorage.clear()
+    navigate("/login")
+  }
   return (
     <Box as="nav" bg="#252525" px={4} py={2} shadow="md" className="max-h-[58px]">
       <Flex alignItems="center">
@@ -38,12 +46,13 @@ const Navbar = ({tagContent, menuItems }) => {
             <MenuButton>
               <Icon as={ChevronDownIcon} color="white"  className="text-white" w={8} h={8} />
             </MenuButton>
-            <MenuList>
+            <MenuList className="w-fit p-3">
               {menuItems.map(({ label, to }, index) => (
                 <MenuItem key={index}>
-                  <Link to={to}>{label}</Link>
+                  <Link className="text-black" to={to}>{label}</Link>
                 </MenuItem>
               ))}
+              <Button onClick={()=>{LogOut()}} className="bg-[#404040] w-full m-auto hover:bg-[#404040] hover:opacity-85">LogOut</Button>
             </MenuList>
           </Menu>
         </Flex>
