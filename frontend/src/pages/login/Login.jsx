@@ -1,73 +1,93 @@
-import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Text,
+  VStack,
+  useToast,
+  Link,
+} from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import AuthLayout from "../../components/components/authLayout";
+import loginImage from "../../assets/oxbridgeAI.jpeg"; // Replace with your image path
 
 const LoginPage = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const toast = useToast();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const login = () => {
-    // Add validation if needed
+  const handleLogin = () => {
     if (email && password) {
       localStorage.setItem("isAuthenticated", "true");
-      setIsAuthenticated(true); // Update the auth state
+      setIsAuthenticated(true); // Update authentication state
+      toast({
+        title: "Login Successful",
+        description: "Welcome back!",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
       navigate("/dashboard");
+    } else {
+      toast({
+        title: "Login Failed",
+        description: "Please provide both email and password.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
-  }
+  };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[#F3F4F6]">
-      <Card className="w-full max-w-md bg-[#242424]">
-        <CardContent className="p-10">
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <div className='w-full flex justify-start items-center'>
-                <Label htmlFor="email" className="text-white">Email</Label>
-              </div>       
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-[#CCCCCC]"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <div className='w-full flex justify-start items-center'>
-                <Label htmlFor="password" className="text-white">Password</Label>
-              </div>    
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="bg-[#CCCCCC]"
-                required
-              />
-            </div>
-            <div className='w-full flex justify-center items-center'>
-              <Button 
-                className="w-9/12 bg-[#676767] hover:bg-[#676767] hover:bg-opacity-85" 
-                onClick={login}
-              >
-                Log in
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    <AuthLayout imageUrl={loginImage}>
+      <VStack spacing={4} align="stretch">
+        <Text fontSize="2xl" fontWeight="bold" textAlign="center">
+          Log In
+        </Text>
+        <FormControl isRequired>
+          <FormLabel>Email</FormLabel>
+          <Input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Password</FormLabel>
+          <Input
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </FormControl>
+        <Button
+          color="white" bg="black"
+          size="lg"
+          width="100%"
+          onClick={handleLogin}
+        >
+          Log In
+        </Button>
+        <Text fontSize="sm" textAlign="center">
+          Don&apos;t have an account?{" "}
+          <Link color="blue.500" href="/signup">
+            Sign up
+          </Link>
+        </Text>
+      </VStack>
+    </AuthLayout>
   );
 };
 
 LoginPage.propTypes = {
-  setIsAuthenticated: PropTypes.func.isRequired
+  setIsAuthenticated: PropTypes.func.isRequired,
 };
 
 export default LoginPage;
