@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const DynamicStat = ({ label, mainText, helpText, IconComponent }) => {
   return (
-    <Stat>
+    <Stat borderColor='black' borderWidth='1px' padding='10px' borderRadius='md'>
         <HStack>
             <Icon as={IconComponent} boxSize={6} />
             <StatLabel>{label}</StatLabel>
