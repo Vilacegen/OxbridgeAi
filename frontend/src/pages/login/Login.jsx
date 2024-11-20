@@ -22,7 +22,7 @@ const LoginPage = () => {
           <div className="space-y-4">
             <div className="space-y-2">
               <div className='w-full flex justify-start items-center'>
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-white">Email</Label>
               </div>       
               <Input
                 id="email"
@@ -34,7 +34,7 @@ const LoginPage = () => {
             </div>
             <div className="space-y-2">
               <div className='w-full flex justify-start items-center'>
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="text-white">Password</Label>
               </div>    
               <Input
                 id="password"
