@@ -7,6 +7,7 @@ import "./App.css"
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  
   useEffect(()=>{
     const seeAuthentication = () => {
       const token = localStorage.getItem("isAuthenticated") === "true";
@@ -16,7 +17,6 @@ function App() {
     }
     seeAuthentication()
   }, [])
-
 
   return (
     <BrowserRouter>
@@ -48,6 +48,17 @@ function App() {
         <Route
           path="/dashboard/*"
           element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
+        />
+        {/* Add a catch-all route for 404s */}
+        <Route
+          path="*"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
       </Routes>
     </BrowserRouter>
