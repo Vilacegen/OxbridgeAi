@@ -16,27 +16,27 @@ import { AiOutlineUser } from "react-icons/ai";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom"; // Import Link for routing
 
-const Navbar = ({ logo, tagContent, menuItems }) => {
+const Navbar = ({tagContent, menuItems }) => {
   return (
-    <Box as="nav" bg="gray.50" px={4} py={2} shadow="md">
+    <Box as="nav" bg="#252525" px={4} py={2} shadow="md" className="max-h-[58px]">
       <Flex alignItems="center">
         {/* Left: Logo */}
         <Box>
-          <img src={logo} alt="Company Logo" style={{ height: "40px" }} />
+          <img src="/Icon.svg" alt="Company Logo" width={250} height={35} style={{ height: "40px" }} />
         </Box>
         <Spacer />
         {/* Right: Tag, Avatar, and Dropdown */}
         <Flex alignItems="center" gap={4}>
           {/* Tag */}
-          <Tag size="lg" colorScheme="red" borderRadius="full">
+          <Tag size="lg" className="bg-white" borderRadius="full">
             <TagLabel>{tagContent}</TagLabel>
           </Tag>
           {/* Avatar */}
-          <Avatar bg="gray.500" icon={<AiOutlineUser fontSize="1.5rem" />} />
+          <Avatar bg="white" size="sm" icon={<AiOutlineUser fontSize="1rem"  className="text-black" />} />
           {/* Dropdown Menu */}
           <Menu>
             <MenuButton>
-              <Icon as={ChevronDownIcon} w={8} h={8} />
+              <Icon as={ChevronDownIcon} color="white"  className="text-white" w={8} h={8} />
             </MenuButton>
             <MenuList>
               {menuItems.map(({ label, to }, index) => (
