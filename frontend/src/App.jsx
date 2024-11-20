@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
 import Login from "./pages/login/Login";
 import Signup from "./pages/login/SignUp";
 import Dashboard from "./pages/judges/Dashboard";
+import Score from "./pages/judges/Score";
 import "./App.css"
 
 function App() {
@@ -56,10 +57,20 @@ function App() {
           }
         />
         <Route
-          path="/dashboard/*"
+          path="/dashboard"
           element={
             isAuthenticated ? (
               <Dashboard />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/dashboard/score/:id" 
+          element={
+            isAuthenticated ? (
+              <Score />
             ) : (
               <Navigate to="/login" replace />
             )
