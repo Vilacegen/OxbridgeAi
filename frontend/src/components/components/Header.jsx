@@ -54,7 +54,6 @@ const Navbar = ({tagContent, menuItems }) => {
 
 
 Navbar.propTypes = {
-  logo: PropTypes.string.isRequired,
   tagContent: PropTypes.string.isRequired,
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({

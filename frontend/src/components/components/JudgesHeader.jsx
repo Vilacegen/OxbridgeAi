@@ -40,7 +40,7 @@ export default function JudgesHeader({ activeTab }) {
             <div className="container mx-auto p-6">
                 <div className="mb-6">
                     <h1 className="text-2xl font-bold">
-                        {activeTab === "dashboard" ? "Judge Dashboard" : "Evaluation History"}
+                        {activeTab === "dashboard" ? "Judge Dashboard" : activeTab === "scoring" ? "Scoring" : "Evaluation History"}
                     </h1>
                 </div>
 
