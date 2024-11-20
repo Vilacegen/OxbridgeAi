@@ -1,4 +1,5 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@shadcn/ui";
+import EvaluationCriteriaManager from "./roundsTab";
 
 const CustomTabs = () => {
   return (
@@ -32,9 +33,7 @@ const CustomTabs = () => {
       </TabsContent>
 
       <TabsContent value="rounds">
-        <div>
-          {/* Insert JSX Element for Rounds */}
-        </div>
+        <EvaluationCriteriaManager />
       </TabsContent>
 
       <TabsContent value="results">
