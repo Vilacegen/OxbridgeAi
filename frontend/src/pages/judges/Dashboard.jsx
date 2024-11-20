@@ -92,10 +92,10 @@ const ScheduleTable = ({ scheduleData, setActiveTab }) => {
   };
 
   return (
-    <Card className="p-4 bg-[#F3F4F6] flex justify-center items-center w-full">
+    <Card className="p-4 bg-[#242424] flex justify-center items-center w-full">
       <div className="w-10/12">
-        <h2 className="text-2xl font-semibold mb-4">Today&apos;s Schedule</h2>
-        <Table className="bg-white rounded-lg">
+        <h2 className="text-2xl font-semibold mb-4 text-[#F8FAF7]">Today&apos;s Schedule</h2>
+        <Table className="bg-[#F3F4F6] rounded-lg">
           <TableHeader>
             <TableRow>
               <TableHead>Startup</TableHead>
@@ -105,7 +105,7 @@ const ScheduleTable = ({ scheduleData, setActiveTab }) => {
               <TableHead>Action</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody className="font-medium">
+          <TableBody className="font-medium bg-[#404040] text-white">
             {scheduleData.length > 0 ? (
               scheduleData.map((schedule) => (
                 <TableRow key={schedule.id}>
@@ -142,7 +142,7 @@ ScheduleTable.propTypes = {
 };
 
 const PastEvaluations = ({ evaluationsData }) => (
-  <Card className="p-4 bg-[#F3F4F6]">
+  <Card className="p-4 bg-[#242424] text-[#F8FAF7]">
     <h2 className="text-lg font-semibold mb-4">Past Evaluations</h2>
     <Table className="bg-white rounded-lg">
       <TableHeader>
@@ -156,7 +156,7 @@ const PastEvaluations = ({ evaluationsData }) => (
           <TableHead>Action</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
+      <TableBody className="bg-[#404040]">
         {evaluationsData.map((evaluation) => (
           <TableRow key={evaluation.id}>
             <TableCell>{evaluation.company}</TableCell>
@@ -238,7 +238,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#171717]">
       <JudgesHeader activeTab={activeTab} />
       
       <main className="container mx-auto p-6">
@@ -248,7 +248,7 @@ export default function Dashboard() {
           onValueChange={setActiveTab}
         >
           <div className="flex justify-between items-center mb-4">
-            <TabsList>
+            <TabsList className="bg-[#404040]">
               <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
               <TabsTrigger value="history">History</TabsTrigger>
             </TabsList>
