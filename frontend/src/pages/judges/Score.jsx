@@ -26,18 +26,20 @@ const createInitialSectionState = (questions) => {
 
 // Create initial state for all sections
 const createInitialFormState = (sections) => {
-  const initialState = {};
-  sections.forEach(section => {
-    initialState[section.id] = createInitialSectionState(section.questions);
-  });
-  return initialState;
-};
+    const initialState = {
+      overallFeedback: '', // Add overall feedback to initial state
+    };
+    sections.forEach(section => {
+      initialState[section.id] = createInitialSectionState(section.questions);
+    });
+    return initialState;
+  };
 
 const ScoreSection = ({ questions, sectionId, formState, onScoreChange, onFeedbackChange }) => (
   <div className="space-y-4">
     {questions.map((question, questionIndex) => (
       <div key={questionIndex} className="space-y-2">
-        <p className="text-[#0A2540]">{question}</p>
+        <p className="text-[#f3f1f1]">{question}</p>
         <div className="flex gap-2">
           {[1, 2, 3, 4, 5].map((score) => (
             <div
@@ -58,10 +60,10 @@ const ScoreSection = ({ questions, sectionId, formState, onScoreChange, onFeedba
       </div>
     ))}
     <div className="space-y-2">
-      <p className="font-semibold">Feedback</p>
+      <p className="font-semibold text-white">Feedback</p>
       <Textarea 
         placeholder="Provide detailed feedback here..." 
-        className="min-h-[100px]"
+        className="min-h-[100px] placeholder:text-[#d0cccc] text-[#f2f0f0]"
         value={formState[sectionId].feedback}
         onChange={(e) => onFeedbackChange(sectionId, e.target.value)}
       />
@@ -208,62 +210,58 @@ export default function Score() {
         }));
     };
 
+    const handleOverallFeedbackChange = (feedback) => {
+        setFormState(prev => ({
+          ...prev,
+          overallFeedback: feedback
+        }));
+      };
+
     const handleSubmit = () => {
         // Calculate section averages and total score
         const sectionScores = {};
         let totalScore = 0;
         
         scoringSections.forEach(section => {
-            // Get all non-null scores for this section
             const scores = Object.values(formState[section.id].scores).filter(score => score !== null);
-            
-            // Calculate average score (1-5 scale)
             const average = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
-            
-            // Get section weight (10 for 10%, 20 for 20%, etc)
             const weight = parseInt(section.title.match(/\((\d+)\/100%\)/)[1]);
-            
-            // Convert average (1-5) to percentage of max possible score (5)
             const percentageScore = (average / 5) * 100;
-            
-            // Calculate weighted score (if weight is 10, max contribution is 10 points)
             const weightedScore = (percentageScore * weight) / 100;
             
             sectionScores[section.id] = {
-                rawAverage: average,                    // Average of 1-5 scores
-                percentageScore: percentageScore,       // Converted to percentage (0-100)
-                weightedScore: weightedScore,           // Contribution to final score
-                maxPoints: weight,                      // Maximum points possible for this section
+                rawAverage: average,
+                percentageScore: percentageScore,
+                weightedScore: weightedScore,
+                maxPoints: weight,
                 feedback: formState[section.id].feedback
             };
             
             totalScore += weightedScore;
         });
-
+    
         const submissionData = {
             timestamp: new Date().toISOString(),
             scoringTime: formatTime(time),
-            totalScore: Math.round(totalScore * 100) / 100, // Round to 2 decimal places
+            totalScore: Math.round(totalScore * 100) / 100,
+            overallFeedback: formState.overallFeedback, // Include overall feedback
             sectionScores,
             rawFormData: formState
         };
-
-        // Log the submission data
+    
         console.log('Submission Data:', submissionData);
-        
-        // Here you would typically send this data to your backend
-        // For now, we're just logging it to the console
     };
+    
 
     return (
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-[#171717]">
             <JudgesHeader activeTab="scoring" />
             <div className="container mx-auto p-6">
-                <Card className="p-6 bg-[#F3F4F6]">
+                <Card className="p-6 bg-[#242424]">
                     <article className="w-full flex flex-col md:flex-row justify-between items-center gap-7 p-7">
                         <div>
-                            <h1 className="text-4xl font-bold mb-3 text-[#0A2540]">AI Innovators</h1>
-                            <p className="text-[#676767] font-semibold text-base">Pitch Scoring</p>
+                            <h1 className="text-4xl font-bold mb-3 text-[#f6f5f5]">AI Innovators</h1>
+                            <p className="text-[#ddd6d6] font-semibold text-base">Pitch Scoring</p>
                         </div>
                         <div>
                             <ScoringTimer 
@@ -281,9 +279,9 @@ export default function Score() {
                     <div className="space-y-4">
                         <Accordion type="single" collapsible className="w-full">
                             {scoringSections.map((section) => (
-                                <AccordionItem value={section.id} key={section.id} className="bg-white rounded-lg border mb-4">
+                                <AccordionItem value={section.id} key={section.id} className="bg-[#404040] rounded-lg border mb-4">
                                     <AccordionTrigger className="px-4">
-                                        <h2 className="font-semibold text-left">{section.title}</h2>
+                                        <h2 className="font-semibold text-left text-white text-xl">{section.title}</h2>
                                     </AccordionTrigger>
                                     <AccordionContent className="px-4 pb-4">
                                         <ScoreSection 
@@ -297,6 +295,15 @@ export default function Score() {
                                 </AccordionItem>
                             ))}
                         </Accordion>
+                        <div className="bg-[#404040] rounded-lg border p-4 mt-6">
+                            <h2 className="font-semibold text-white mb-4">Overall Feedback</h2>
+                            <Textarea 
+                                placeholder="Provide your overall feedback about the pitch..."
+                                className="min-h-[150px] text-[#f2f0f0]"
+                                value={formState.overallFeedback}
+                                onChange={(e) => handleOverallFeedbackChange(e.target.value)}
+                            />
+                        </div>
                         <div className="flex justify-end mt-6">
                             <Button 
                                 onClick={handleSubmit}

@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 
 const StatCard = ({ title, value, subtitle }) => {
   return (
-    <Card className="p-4 border border-black">
+    <Card className="p-4 bg-[#242424] text-[#F8FAF7] border border-black">
       <CardTitle className="mb-4">{title}</CardTitle>
       <div className="flex items-center gap-2">
-        <h3 className="text-4xl font-bold">{value}</h3>
+        <h3 className="text-4xl font-bold text-[#FFFFFF]">{value}</h3>
       </div>
-      <p className="text-sm text-muted-foreground">{subtitle}</p>
+      <p className="text-sm text-muted-foreground text-white">{subtitle}</p>
     </Card>
   );
 };
@@ -33,13 +33,13 @@ export default function JudgesHeader({ activeTab }) {
     ];
     
     return (
-        <div>
+        <div className="text-white">
             <article>
                 <Navbar tagContent={tagContent} menuItems={menuItems} />
             </article>
             <div className="container mx-auto p-6">
                 <div className="mb-6">
-                    <h1 className="text-2xl font-bold">
+                    <h1 className="text-2xl font-bold text-white">
                         {activeTab === "dashboard" ? "Judge Dashboard" : activeTab === "scoring" ? "Scoring" : "Evaluation History"}
                     </h1>
                 </div>
