@@ -17,16 +17,16 @@ const RoundsTable = ({ rounds, onEdit, onDelete }) => {
   return (
     <Box overflowX="auto">
       {rounds.length === 0 ? (
-        <Box textAlign="center" p={5} border="1px" borderColor="gray.200" borderRadius="md">
+        <Box textAlign="center" p={5}  borderRadius="md">
           <Text fontSize="lg" fontWeight="bold" mb={3}>
             Oops! Seems no round has been added.
           </Text>
         </Box>
       ) : (
-        <Table variant="simple" colorScheme="gray" size="md">
+        <Table variant="simple" w='full' bg='white' padding='5px' borderRadius='md' my='10px'>
           <Thead>
             <Tr>
-              <Th>Round Name</Th>
+              <Th w={"85%"}>Round Name</Th>
               <Th>Actions</Th>
             </Tr>
           </Thead>
@@ -35,21 +35,22 @@ const RoundsTable = ({ rounds, onEdit, onDelete }) => {
               <Tr key={index}>
                 <Td>{round.name}</Td>
                 <Td>
-                  <IconButton
-                    aria-label="Edit Round"
-                    icon={<EditIcon />}
-                    size="sm"
-                    mr={2}
-                    onClick={() => onEdit(index)} // Pass index instead of round object
-                  />
-                  <IconButton
-                    aria-label="Delete Round"
-                    icon={<DeleteIcon />}
-                    size="sm"
-                    colorScheme="red"
-                    onClick={() => onDelete(index)} // Pass index to delete
-                  />
-                </Td>
+                <IconButton
+                  aria-label="Edit"
+                  icon={<EditIcon/>}
+                  size="sm"
+                  color="black"
+                  onClick={() => onEdit(round)}
+                  mr={2}
+                />
+                <IconButton
+                  aria-label="Delete"
+                  icon={<DeleteIcon/>}
+                  size="sm"
+                  color="black"
+                  onClick={() => onDelete(index)}
+                />
+              </Td>
               </Tr>
             ))}
           </Tbody>

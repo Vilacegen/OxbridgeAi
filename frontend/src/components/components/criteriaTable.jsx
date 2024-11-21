@@ -1,26 +1,36 @@
-import { Table, Tbody, Td, Th, Thead, Tr, Slider, Button, Box, Text } from '@chakra-ui/react';
+/* eslint-disable react/prop-types */
+import { Table, Tbody, Td, Th, Thead, Tr, Slider, Box, Text } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
-import PropTypes from 'prop-types'
+import {
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  IconButton,
+  Stack,
+  Switch
+} from '@chakra-ui/react'
 
-const EvaluationCriteriaTable = ({ criteria, onEdit, onDelete }) => {
+
+export const CriteriaTable = ({ criteria, onEdit, onDelete }) => {
+  console.log('Rendering CriteriaTable'); // Log when CriteriaTable renders
   return (
-    <Box bg='white' border='1px' borderColor='black' padding='5px' borderRadius='md'>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+    <Box bg='white' padding='5px' borderRadius='md'>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "7px" }}>
         {/* Title on the Left */}
         <h2 style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Evaluation Criteria</h2>
       </div>
 
       {/* No Criteria Message */}
       {criteria.length === 0 ? (
-        <Box textAlign="center" p={5} border="1px" borderColor="gray.200" borderRadius="md">
+        <Box textAlign="center" p={5} borderRadius="md">
           <Text fontSize="lg" fontWeight="bold" mb={3}>Oops! Seems no criteria has been added.</Text>
         </Box>
       ) : (
-        <Table variant="simple" colorScheme="teal">
+        <Table variant="simple" bg='white' overflowX="auto" borderRadius="md" >
           <Thead>
             <Tr>
               <Th></Th>
-              <Th></Th>
+              <Th w="50%"></Th>
               <Th></Th>
               <Th></Th>
             </Tr>
@@ -29,39 +39,40 @@ const EvaluationCriteriaTable = ({ criteria, onEdit, onDelete }) => {
             {criteria.map((item, index) => (
               <Tr key={index}>
                 <Td>
-                  <div>{item.name}</div>
+                <Text color='black' fontWeight={'semibold'} fontSize={"lg"}>{item.name} </Text>
                   <div>
-                    <Button variant="link" colorScheme="blue" isDisabled>
-                      Subquestions
-                    </Button>
+                    <Stack direction='row'>
+                      <Text color='black' fontWeight={"light"} fontSize={"sm"}>Subquestions </Text>
+                      <Switch disabled="true"  value={true}/>
+                    </Stack>
                   </div>
                 </Td>
                 <Td>
                   <Slider value={item.weight} isReadOnly>
-                    <Slider.Track>
-                      <Slider.FilledTrack />
-                    </Slider.Track>
-                    <Slider.Thumb />
+                    <SliderTrack>
+                      <SliderFilledTrack />
+                    </SliderTrack>
+                    <SliderThumb />
                   </Slider>
                 </Td>
                 <Td>{item.weight}%</Td>
                 <Td>
-                  <Button
-                    leftIcon={<EditIcon />}
-                    colorScheme="blue"
-                    onClick={() => onEdit(index)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    leftIcon={<DeleteIcon />}
-                    colorScheme="red"
-                    onClick={() => onDelete(index)}
-                    ml={2}
-                  >
-                    Delete
-                  </Button>
-                </Td>
+                <IconButton
+                  aria-label="Edit"
+                  icon={<EditIcon/>}
+                  size="sm"
+                  color="black"
+                  onClick={() => onEdit(item)}
+                  mr={2}
+                />
+                <IconButton
+                  aria-label="Delete"
+                  icon={<DeleteIcon/>}
+                  size="sm"
+                  color="black"
+                  onClick={() => onDelete(index)}
+                />
+              </Td>
               </Tr>
             ))}
           </Tbody>
@@ -71,15 +82,5 @@ const EvaluationCriteriaTable = ({ criteria, onEdit, onDelete }) => {
   )
 }
 
-EvaluationCriteriaTable.propTypes = {
-  criteria: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      weight: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  onEdit: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-}
 
-export default EvaluationCriteriaTable;
+

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Box, Button, Flex, Stack, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Input } from '@chakra-ui/react'
-import { AddIcon, DownloadIcon } from '@chakra-ui/icons'
-import EvaluationCriteriaTable from './criteriaTable'
+import { DownloadIcon } from '@chakra-ui/icons'
 import AddEditCriteriaModal from './add-deleteCriteriaModal'
 import RoundsTable from './roundsTable'
+import { CriteriaTable } from './criteriaTable'
 
 
 const RoundsTab = () => {
@@ -219,9 +219,8 @@ const openRoundModal = (index = null) => {
   return (
     <Box>
       {/* Buttons for Add Round and Import */}
-      <Stack direction='row' spacing='4'>
-        <Button leftIcon={<AddIcon />} color='white' bg='black' onClick={() => openRoundModal()}>Add Round</Button>
-        <Button leftIcon={<DownloadIcon />} color='black' bg='black'>Import</Button>
+      <Stack direction='row' spacing='4' justify={'flex-end'} my='5px'>
+        <Button leftIcon={<DownloadIcon />} color='white' bg='black' >Import</Button>
       </Stack>
 
       <Box bg='blackAlpha.400' paddingY='8px' paddingX='10%' borderRadius='10px'>
@@ -229,12 +228,8 @@ const openRoundModal = (index = null) => {
         <RoundsTable rounds={rounds} onEdit={openRoundModal} onDelete={handleDeleteRound} />
 
         {/* Evaluation Criteria Table */}
-        <Box>
-          <Flex>
-            <Text fontSize="xl" fontWeight="bold" mb={4}>Evaluation Criteria</Text>
-            <Button onClick={() => openCriteriaModal()}>Add Criteria</Button>
-          </Flex>
-          <EvaluationCriteriaTable
+        <Box mt='15px'>
+          <CriteriaTable
             criteria={criteria}
             onEdit={openCriteriaModal}
             onDelete={handleDeleteCriteria}
@@ -250,9 +245,10 @@ const openRoundModal = (index = null) => {
         </Box>
         
         {/* Display Total Weight */}
-        <Flex>
+        <Flex justifyContent={'space-between'} marginTop={"10px"} padding={"5px"}>
           <Text fontSize="xl" fontWeight="bold" mb={4}>Total Weight</Text>
-          <Button colorScheme="teal">{totalWeight}</Button>
+          <Text fontSize="xl" fontWeight="bold" mb={4} color={"green"}>{totalWeight}%</Text>
+          
         </Flex>
       </Box>
 

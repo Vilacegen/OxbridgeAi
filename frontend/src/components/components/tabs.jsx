@@ -39,7 +39,7 @@ const CustomTabs = () => {
           </TabsContent>
 
           <TabsContent value="rounds">
-            <p></p>
+            <RoundsTab />
           </TabsContent>
 
           <TabsContent value="schedule">
