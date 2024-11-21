@@ -3,6 +3,7 @@ import { Box, HStack, VStack, Spinner, useToast } from "@chakra-ui/react";
 import { FaChartBar, FaUsers, FaCalendarAlt, FaStar } from "react-icons/fa";
 import DynamicStat from "../../components/components/DynamicStat";
 import Header from "../../components/components/Header";
+import CustomTabs from "@/components/components/tabs";
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
@@ -90,8 +91,7 @@ const Dashboard = () => {
 
       {/* Additional Content */}
       <Box>
-        <h2>Your additional content goes here</h2>
-        <p>This is where you can add more sections, tables, or any other content.</p>
+        <CustomTabs />
       </Box>
     </Box>
     </>

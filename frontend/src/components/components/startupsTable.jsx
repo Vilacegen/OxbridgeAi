@@ -13,9 +13,9 @@ import PropTypes from 'prop-types';
 
 const StartupTable = ({ startups, onEdit, onDelete }) => {
   return (
-    <Box overflowX="auto">
-      <Table variant="striped" colorScheme="gray">
-        <Thead bg="gray.100">
+    <Box overflowX="auto" bg='white' padding='5px' borderRadius="md"> 
+      <Table variant="simple">
+        <Thead >
           <Tr>
             <Th>Startup Name</Th>
             <Th>Category</Th>
@@ -36,15 +36,15 @@ const StartupTable = ({ startups, onEdit, onDelete }) => {
                   aria-label="Edit"
                   icon={<EditIcon/>}
                   size="sm"
-                  colorScheme="gray.100"
-                  onClick={() => onEdit(startup.id)}
+                  color="black"
+                  onClick={() => onEdit(startup)}
                   mr={2}
                 />
                 <IconButton
                   aria-label="Delete"
                   icon={<DeleteIcon/>}
                   size="sm"
-                  colorScheme="gray.100"
+                  color="black"
                   onClick={() => onDelete(startup.id)}
                 />
               </Td>

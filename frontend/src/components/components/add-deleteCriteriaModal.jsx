@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, FormControl, FormLabel, Input, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Tag, TagLabel, TagLeftIcon, IconButton } from '@chakra-ui/react'
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
 
-const AddEditCriteriaModal = ({ isOpen, onClose, onSubmit, existingCriteria, index, totalWeight }) => {
+
+const AddEditCriteriaModal = ({ isOpen, onClose, onSubmit, existingCriteria, totalWeight }) => {
   const [name, setName] = useState(existingCriteria ? existingCriteria.name : '')
   const [weight, setWeight] = useState(existingCriteria ? existingCriteria.weight : 0)
   const [subquestions, setSubquestions] = useState(existingCriteria ? existingCriteria.subquestions : [''])
@@ -105,17 +106,6 @@ const AddEditCriteriaModal = ({ isOpen, onClose, onSubmit, existingCriteria, ind
     </Modal>
   )
 }
-AddEditCriteriaModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  existingCriteria: PropTypes.shape({
-    name: PropTypes.string,
-    weight: PropTypes.number,
-    subquestions: PropTypes.arrayOf(PropTypes.string)
-  }),
-  index: PropTypes.number,
-  totalWeight: PropTypes.number.isRequired
-}
+
 
 export default AddEditCriteriaModal;
