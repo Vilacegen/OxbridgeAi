@@ -2,18 +2,22 @@ import { useEffect, useState } from "react";
 import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
 import Login from "./pages/login/Login";
 import Signup from "./pages/login/SignUp";
-import Dashboard from "./pages/judges/Dashboard";
 import Score from "./pages/judges/Score";
-import "./App.css"
+import "./App.css";
+import AdminDashboard from "./pages/admin/Dashboard";
+import JudgeDashboard from "./pages/judges/Dashboard";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [role, setRole] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = () => {
       const token = localStorage.getItem("isAuthenticated") === "true";
+      const userRole = localStorage.getItem("role");
       setIsAuthenticated(token);
+      setRole(userRole);
       setIsLoading(false);
     };
     checkAuth();
@@ -23,6 +27,12 @@ function App() {
     return <div>Loading...</div>; // Or your loading component
   }
 
+  const redirectToDashboard = () => {
+    if (role === "admin") return <Navigate to="/admin-dashboard" replace />;
+    if (role === "judge") return <Navigate to="/judge-dashboard" replace />;
+    return <Navigate to="/login" replace />;
+  };
+
   return (
     <HashRouter>
       <Routes>
@@ -30,7 +40,7 @@ function App() {
           path="/"
           element={
             isAuthenticated ? (
-              <Navigate to="/dashboard" replace />
+              redirectToDashboard()
             ) : (
               <Navigate to="/login" replace />
             )
@@ -40,36 +50,44 @@ function App() {
           path="/login"
           element={
             isAuthenticated ? (
-              <Navigate to="/dashboard" replace />
+              redirectToDashboard()
             ) : (
-              <Login setIsAuthenticated={setIsAuthenticated} />
+              <Login
+                setIsAuthenticated={setIsAuthenticated}
+                setRole={setRole}
+              />
             )
           }
         />
         <Route
           path="/signup"
+          element={isAuthenticated ? redirectToDashboard() : <Signup />}
+        />
+        <Route
+          path="/admin-dashboard"
           element={
-            isAuthenticated ? (
-              <Navigate to="/dashboard" replace />
+            isAuthenticated && role === "admin" ? (
+              <AdminDashboard />
             ) : (
-              <Signup />
+              <Navigate to="/login" replace />
             )
           }
         />
+
         <Route
-          path="/dashboard"
+          path="/judge-dashboard"
           element={
-            isAuthenticated ? (
-              <Dashboard />
+            isAuthenticated && role === "judge" ? (
+              <JudgeDashboard />
             ) : (
               <Navigate to="/login" replace />
             )
           }
         />
         <Route
-          path="/dashboard/score/:id" 
+          path="/judge-dashboard/score/:id"
           element={
-            isAuthenticated ? (
+            isAuthenticated && role === "judge" ? (
               <Score />
             ) : (
               <Navigate to="/login" replace />
