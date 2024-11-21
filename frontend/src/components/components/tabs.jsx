@@ -5,6 +5,7 @@ import RoundsTab from "./roundsTab";
 import StartupsTab from "./startupstab";
 import JudgesTab from "./judgesTab";
 import { Box } from "@chakra-ui/react";
+import RankingsTab from "./ranksTab";
 
 const CustomTabs = () => {
   const [, setActiveTab] = useState("startups");
@@ -48,7 +49,7 @@ const CustomTabs = () => {
           </TabsContent>
 
           <TabsContent value="results">
-            
+            <RankingsTab/>
           </TabsContent>
         </Tabs>
       </main>
